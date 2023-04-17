@@ -1,10 +1,10 @@
 <template>
-  <div class="vtl">
+  <div class="vtl" :class="model.class">
     <div
       v-if="model.name !== 'root'"
       :id="model.id"
       class="vtl-node"
-      :class="[...model.class, { 'vtl-leaf-node': model.isLeaf, 'vtl-tree-node': !model.isLeaf }]"
+      :class="{ 'vtl-leaf-node': model.isLeaf, 'vtl-tree-node': !model.isLeaf }"
     >
       <div
         class="vtl-border vtl-up"
