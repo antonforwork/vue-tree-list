@@ -1,10 +1,10 @@
 <template>
-  <div class="vtl">
+  <div class="vtl" :class="model.class">
     <div
       v-if="model.name !== 'root'"
       :id="model.id"
       class="vtl-node"
-      :class="[...model.class, { 'vtl-leaf-node': model.isLeaf, 'vtl-tree-node': !model.isLeaf }]"
+      :class="{ 'vtl-leaf-node': model.isLeaf, 'vtl-tree-node': !model.isLeaf }"
     >
       <div
         class="vtl-border vtl-up"
@@ -23,8 +23,6 @@
         @dragleave="dragLeave"
         @drop="drop"
         @dragend="dragEnd"
-        @mouseover="mouseOver"
-        @mouseout="mouseOut"
         @click.stop="click"
       >
         <span class="vtl-caret vtl-is-small" v-if="model.children && model.children.length > 0">
@@ -57,36 +55,6 @@
           @blur="setUnEditable"
           @keyup.enter="setUnEditable"
         />
-        <div class="vtl-operation" v-show="isHover">
-          <span
-            :title="defaultAddTreeNodeTitle"
-            @click.stop.prevent="addChild(false)"
-            v-if="!model.isLeaf && !model.addTreeNodeDisabled"
-          >
-            <slot name="addTreeNodeIcon" :expanded="expanded" :model="model" :root="rootNode">
-              <i class="vtl-icon vtl-icon-folder-plus-e"></i>
-            </slot>
-          </span>
-          <span
-            :title="defaultAddLeafNodeTitle"
-            @click.stop.prevent="addChild(true)"
-            v-if="!model.isLeaf && !model.addLeafNodeDisabled"
-          >
-            <slot name="addLeafNodeIcon" :expanded="expanded" :model="model" :root="rootNode">
-              <i class="vtl-icon vtl-icon-plus"></i>
-            </slot>
-          </span>
-          <span title="edit" @click.stop.prevent="setEditable" v-if="!model.editNodeDisabled">
-            <slot name="editNodeIcon" :expanded="expanded" :model="model" :root="rootNode">
-              <i class="vtl-icon vtl-icon-edit"></i>
-            </slot>
-          </span>
-          <span title="delete" @click.stop.prevent="delNode" v-if="!model.delNodeDisabled">
-            <slot name="delNodeIcon" :expanded="expanded" :model="model" :root="rootNode">
-              <i class="vtl-icon vtl-icon-trash"></i>
-            </slot>
-          </span>
-        </div>
       </div>
 
       <div
@@ -149,7 +117,6 @@ export default {
   name: 'vue-tree-list',
   data: function() {
     return {
-      isHover: false,
       editable: false,
       isDragEnterUp: false,
       isDragEnterBottom: false,
@@ -268,15 +235,6 @@ export default {
       if (this.isFolder) {
         this.expanded = !this.expanded
       }
-    },
-
-    mouseOver() {
-      if (this.model.disabled) return
-      this.isHover = true
-    },
-
-    mouseOut() {
-      this.isHover = false
     },
 
     click() {
