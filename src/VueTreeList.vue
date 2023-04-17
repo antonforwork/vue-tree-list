@@ -184,7 +184,7 @@ export default {
   },
   computed: {
     rootNode() {
-      var node = this.$parent
+      let node = this.$parent
       while (node._props.model.name !== 'root') {
         node = node.$parent
       }
@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     updateName(e) {
-      var oldName = this.model.name
+      let oldName = this.model.name
       this.model.changeName(e.target.value)
       // eslint-disable-next-line no-console
       console.log('update Name')
@@ -249,7 +249,7 @@ export default {
     setUnEditable(e) {
       if (this.editable === false) return
       this.editable = false
-      var oldName = this.model.name
+      let oldName = this.model.name
       this.model.changeName(e.target.value)
       this.rootNode.$emit('change-name', {
         id: this.model.id,
@@ -289,7 +289,7 @@ export default {
     addChild(isLeaf) {
       const name = isLeaf ? this.defaultLeafNodeName : this.defaultTreeNodeName
       this.expanded = true
-      var node = new TreeNode({ name, isLeaf })
+      let node = new TreeNode({ name, isLeaf })
       this.model.addChildren(node, true)
       this.rootNode.$emit('add-node', node)
     },
