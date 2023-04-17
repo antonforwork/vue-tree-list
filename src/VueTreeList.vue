@@ -4,7 +4,7 @@
       v-if="model.name !== 'root'"
       :id="model.id"
       class="vtl-node"
-      :class="{ 'vtl-leaf-node': model.isLeaf, 'vtl-tree-node': !model.isLeaf }"
+      :class="[...model.class, { 'vtl-leaf-node': model.isLeaf, 'vtl-tree-node': !model.isLeaf }]"
     >
       <div
         class="vtl-border vtl-up"
